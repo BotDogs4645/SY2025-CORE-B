@@ -1,0 +1,108 @@
+{
+  "Docking": {
+    "Data": []
+  },
+  "MainWindow": {
+    "GLOBAL": {
+      "font": "Proggy Dotted",
+      "fps": "120",
+      "height": "1001",
+      "maximized": "0",
+      "style": "0",
+      "userScale": "2",
+      "width": "1920",
+      "xpos": "0",
+      "ypos": "29"
+    }
+  },
+  "Table": {
+    "0x965B9C9E,2": {
+      "Column 0  Width": "160",
+      "Column 1  Weight": "1.0000",
+      "RefScale": "16"
+    },
+    "0xD0930F2E,2": {
+      "Column 0  Width": "160",
+      "Column 1  Weight": "1.0000",
+      "RefScale": "16"
+    },
+    "0xE56EC1C2,4": {
+      "Column 0  Weight": "1.0112",
+      "Column 1  Weight": "0.9843",
+      "Column 2  Weight": "1.0022",
+      "Column 3  Weight": "1.0022"
+    }
+  },
+  "Window": {
+    "###/FMSInfo": {
+      "Collapsed": "0",
+      "Pos": "65,51",
+      "Size": "217,194"
+    },
+    "###DIO": {
+      "Collapsed": "0",
+      "Pos": "1292,874",
+      "Size": "124,54"
+    },
+    "###Encoders": {
+      "Collapsed": "0",
+      "Pos": "1622,97",
+      "Size": "135,54"
+    },
+    "###FMS": {
+      "Collapsed": "0",
+      "Pos": "19,205",
+      "Size": "202,214"
+    },
+    "###Joysticks": {
+      "Collapsed": "0",
+      "Pos": "271,579",
+      "Size": "976,272"
+    },
+    "###NetworkTables": {
+      "Collapsed": "0",
+      "Pos": "360,279",
+      "Size": "948,277"
+    },
+    "###NetworkTables Info": {
+      "Collapsed": "0",
+      "Pos": "265,77",
+      "Size": "937,508"
+    },
+    "###Other Devices": {
+      "Collapsed": "0",
+      "Pos": "1338,130",
+      "Size": "438,699"
+    },
+    "###PWM Outputs": {
+      "Collapsed": "1",
+      "Pos": "1659,703",
+      "Size": "158,54"
+    },
+    "###RoboRIO": {
+      "Collapsed": "0",
+      "Pos": "2,427",
+      "Size": "233,528"
+    },
+    "###System Joysticks": {
+      "Collapsed": "0",
+      "Pos": "4,640",
+      "Size": "232,254"
+    },
+    "###Timing": {
+      "Collapsed": "0",
+      "Pos": "17,37",
+      "Size": "162,168"
+    },
+    "Debug##Default": {
+      "Collapsed": "0",
+      "Pos": "60,60",
+      "Size": "400,400"
+    },
+    "Robot State": {
+      "Collapsed": "0",
+      "Pos": "5,20",
+      "Size": "118,38"
+    }
+  }
+}
