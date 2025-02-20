@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -16,7 +17,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
+import frc.robot.subsystems.CANRollerSubsystem;
+// https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/wpi-drive-classes.html USEW
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
  * the TimedRobot documentation. If you change the name of this class or the package after creating
@@ -40,6 +42,8 @@ public class Robot extends TimedRobot {
   private final Timer m_timer = new Timer();
   // The robot's drive
   private final DifferentialDrive m_drive;
+  private final CANRollerSubsystem rollerSubsystem = new CANRollerSubsystem();
+
 
   // The gyro sensor
   private final Pigeon2 m_gyro = new Pigeon2(8);
@@ -91,10 +95,15 @@ public class Robot extends TimedRobot {
     double x = Math.signum(m_controller.getLeftX())*(m_controller.getLeftX()*m_controller.getLeftX());
     double y = m_controller.getLeftY()*-1;
 
+
     if (Math.abs(x) <= 0.4){x = 0;}
     if (Math.abs(y) <= 0.4){y = 0;}
     /*(-x/2) + (y/2),  (-x/2) - (y/2) */
     m_drive.tankDrive((-x/2) + (y/2),  (-x/2) - (y/2));
+    // ill add ts input https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj/XboxController.html
+    if (m_controller.getYButton()) {
+      rollerSubsystem.runRoller(1.0, 0.0);
+    }
   }
 
   /** This function is called once each time the robot enters test mode. */
