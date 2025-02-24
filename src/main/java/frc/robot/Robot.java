@@ -25,7 +25,6 @@ import frc.robot.subsystems.CANRollerSubsystem;
  * this project, you must also update the manifest file in the resource directory.
  */
 public class Robot extends TimedRobot {
-  
 
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -93,7 +92,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     double x = Math.signum(m_controller.getLeftX())*(m_controller.getLeftX()*m_controller.getLeftX());
-    double y = m_controller.getLeftY()*-1;
+    double y = m_controller.getLeftY() * -1;
 
 
     if (Math.abs(x) <= 0.4){x = 0;}
