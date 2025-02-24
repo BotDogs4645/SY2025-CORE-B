@@ -73,13 +73,21 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    // Drive for 2 seconds
-    if (m_timer.get() < 2.0) {
-      // Drive forwards half speed, make sure to turn input squaring off
-  
-    } else {
-      m_drive.stopMotor(); // stop robot
-    }
+    LimelightHelpers.setPriorityTagID("", 9);
+
+      double limelightTX = LimelightHelpers.getTX("");
+      
+      if (Math.abs(limelightTX) > 5) {
+        if (Math.signum(limelightTX) == -1){
+          m_drive.tankDrive(autoturnspeed, autoturnspeed);
+        }
+        if (Math.signum(limelightTX) == 1){
+          m_drive.tankDrive(-autoturnspeed, -autoturnspeed);
+        }
+        
+      } else {
+        //m_drive.tankDrive(autospeed, -autospeed);
+      }
   }
   /** This function is called once each time the robot enters teleoperated mode. */
   @Override
