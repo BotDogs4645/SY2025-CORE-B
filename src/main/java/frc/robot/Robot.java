@@ -3,7 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -29,12 +30,12 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
  // The motors on the left side of the drive.
- private final SparkMax m_leftLeader = new SparkMax(4, MotorType.kBrushed);
- private final SparkMax m_leftFollower = new SparkMax(3, MotorType.kBrushed);
+ private final SparkMax m_leftLeader = new SparkMax(DriveConstants.LEFT_LEADER_ID, MotorType.kBrushed);
+ private final SparkMax m_leftFollower = new SparkMax(DriveConstants.LEFT_FOLLOWER_ID, MotorType.kBrushed);
 
  // The motors on the right side of the drive.
- private final SparkMax m_rightLeader = new SparkMax(5, MotorType.kBrushed);
- private final SparkMax m_rightFollower = new SparkMax(2, MotorType.kBrushed);
+ private final SparkMax m_rightLeader = new SparkMax(DriveConstants.RIGHT_LEADER_ID, MotorType.kBrushed);
+ private final SparkMax m_rightFollower = new SparkMax(DriveConstants.RIGHT_FOLLOWER_ID, MotorType.kBrushed);
 
  
   private final XboxController m_controller = new XboxController(0);
