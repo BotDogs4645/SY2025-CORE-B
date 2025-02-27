@@ -42,5 +42,6 @@ public class CANRollerSubsystem extends SubsystemBase {
   /** This is a method that makes the roller spin */
   public void runRoller(double forward, double reverse) {
     rollerMotor.set(forward - reverse);
+    // System.out.println("it works");
   }
 }

@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 
 import java.io.Console;
 
@@ -22,8 +24,11 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
+import frc.robot.subsystems.CANRollerSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.LimelightHelpers;
+
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -36,6 +41,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
 
+
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private double autoturnspeed = 0.5;
   private double autospeed = 0.5;
@@ -43,18 +49,20 @@ public class Robot extends TimedRobot {
   private double slowdownamount = 0;
   private boolean bDown = false;
  // The motors on the left side of the drive.
- private final SparkMax m_leftLeader = new SparkMax(4, MotorType.kBrushed);
- private final SparkMax m_leftFollower = new SparkMax(3, MotorType.kBrushed);
+ private final SparkMax m_leftLeader = new SparkMax(DriveConstants.LEFT_LEADER_ID, MotorType.kBrushed);
+ private final SparkMax m_leftFollower = new SparkMax(DriveConstants.LEFT_FOLLOWER_ID, MotorType.kBrushed);
 
  // The motors on the right side of the drive.
- private final SparkMax m_rightLeader = new SparkMax(5, MotorType.kBrushed);
- private final SparkMax m_rightFollower = new SparkMax(2, MotorType.kBrushed);
+ private final SparkMax m_rightLeader = new SparkMax(DriveConstants.RIGHT_LEADER_ID, MotorType.kBrushed);
+ private final SparkMax m_rightFollower = new SparkMax(DriveConstants.RIGHT_FOLLOWER_ID, MotorType.kBrushed);
 
  
   private final XboxController m_controller = new XboxController(0);
   private final Timer m_timer = new Timer();
   // The robot's drive
   private final DifferentialDrive m_drive;
+  private final CANRollerSubsystem rollerSubsystem = new CANRollerSubsystem();
+
 
   // The gyro sensor
   private final Pigeon2 m_gyro = new Pigeon2(8);
@@ -134,11 +142,15 @@ public class Robot extends TimedRobot {
     double x = Math.signum(m_controller.getRightX())*((m_controller.getRightX()*m_controller.getRightX()));
     double y = m_controller.getLeftY()*-1;
     
+
     if (Math.abs(x) <= 0.4){x = 0;}
     if (Math.abs(y) <= 0.4){y = 0;}
     slowdownamount = 1-(0.8 * m_controller.getLeftTriggerAxis());
     System.out.println(slowdownamount);
     /*(-x/2) + (y/2),  (-x/2) - (y/2) */
+    if (m_controller.getYButton()) {
+      rollerSubsystem.runRoller(1.0, 0.0);
+    }
     if (m_controller.getBButtonPressed()){
       bDown = true;
     }
