@@ -13,6 +13,16 @@ public class Constants {
     public static final int driveControllerId = 0;
     public static final int pdhCANId = 1;
 
+    public static class ArmConstants {
+        public static final int pivotMotorID = 8;
+        public static final int WheelMotorID = 9;
+    }
+
+    public static class RollerConstants {
+        public static final int rollerMotorID = 7;
+        public static final double wheelDutyCycle = 0.4;
+    }
+
     public static class DrivetrainConstants {
         // Smart current limit (amps) per motor
         public static final int currentLimit = 80;

@@ -10,13 +10,16 @@ import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.Spit;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Roller;
 
 public class RobotContainer {
   private final CommandXboxController controller = new CommandXboxController(Constants.driveControllerId);
 
   private final Drivetrain drivetrain = new Drivetrain();
+  private final Roller roller = new Roller();
   
   private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -32,6 +35,8 @@ public class RobotContainer {
       () -> -controller.getLeftY(),
       () -> -controller.getRightX()
     ));
+
+    controller.leftBumper().whileTrue(new Spit(roller));
   }
 
   public Command getAutonomousCommand() {
