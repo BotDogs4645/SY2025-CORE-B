@@ -4,17 +4,37 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.TeleopDrive;
+import frc.robot.subsystems.Drivetrain;
 
 public class RobotContainer {
+  private final CommandXboxController controller = new CommandXboxController(Constants.driveControllerId);
+
+  private final Drivetrain drivetrain = new Drivetrain();
+  
+  private final LoggedDashboardChooser<Command> autoChooser;
+
   public RobotContainer() {
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    drivetrain.setDefaultCommand(new TeleopDrive(
+      drivetrain,
+      () -> -controller.getLeftY(),
+      () -> -controller.getRightX()
+    ));
+  }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return autoChooser.get();
   }
 }

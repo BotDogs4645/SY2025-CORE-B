@@ -1,10 +1,40 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.RobotBase;
 
 public class Constants {
     public static final Mode simMode = Mode.SIM;
     public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+
+    public static final int driveControllerId = 0;
+    public static final int pdhCANId = 1;
+
+    public static class DrivetrainConstants {
+        // Smart current limit (amps) per motor
+        public static final int currentLimit = 80;
+
+        public static final double p = 1;
+        public static final double i = 0;
+        public static final double d = 0;        
+
+        public static final int leftMotorAID = 2;
+        public static final int leftMotorBID = 3;
+        public static final int rightMotorAID = 4;
+        public static final int rightMotorBID = 5;
+
+        public static final int pigeonID = 6;
+
+        public static final Distance trackWidth = Inches.of(27.5);
+        public static final Distance wheelRadius = Inches.of(3.0);
+        public static final double motorReduction = 10.71;
+
+        public static final double positionConversion = Math.PI * 2 * wheelRadius.in(Meters);
+        public static final double velocityConversion = Math.PI * 2 * wheelRadius.in(Meters) / 60;
+    }
 
     public static enum Mode {
         REAL, // Running on a real robot.
