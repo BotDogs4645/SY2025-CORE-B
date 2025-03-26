@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Meters;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.json.simple.parser.ParseException;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -13,6 +14,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.util.DriveFeedforwards;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -78,25 +80,7 @@ public class Drivetrain extends SubsystemBase {
         drive = new DifferentialDrive(leftA, leftB);
         poseEstimator = new DifferentialDrivePoseEstimator(kinematics, new Rotation2d(), 0, 0, new Pose2d());
     
-        try {
-            AutoBuilder.configure(
-                this::getPose, 
-                poseEstimator::resetPose,
-                () -> kinematics.toChassisSpeeds(
-                    new DifferentialDriveWheelSpeeds(
-                        getLeftVelocityMetersPerSec(),
-                        getRightPositionMeters()
-                    )
-                ),
-                this::runClosedLoop, 
-                new PPLTVController(0.02), 
-                RobotConfig.fromGUISettings(), 
-                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red, 
-                this
-            );
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+        createAutoBuilder();
     }
     
     private void configureMotor(SparkMax motor, boolean invert, SparkBase follow) {
@@ -119,9 +103,46 @@ public class Drivetrain extends SubsystemBase {
         motor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
     }
 
+    private void createAutoBuilder() {
+        try {
+            AutoBuilder.configure(
+                this::getPose, 
+                poseEstimator::resetPose,
+                () -> kinematics.toChassisSpeeds(
+                    new DifferentialDriveWheelSpeeds(
+                        getLeftVelocityMetersPerSec(),
+                        getRightPositionMeters()
+                    )
+                ),
+                this::runClosedLoop, 
+                new PPLTVController(0.02), 
+                RobotConfig.fromGUISettings(), 
+                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red, 
+                this
+            );
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        PathPlannerLogging.setLogActivePathCallback(
+            (List<Pose2d> path) -> Logger.recordOutput("Drivetrain/ActivePath", path.toArray(new Pose2d[0]))
+        );
+        PathPlannerLogging.setLogTargetPoseCallback(
+            (Pose2d pose) -> Logger.recordOutput("Drivetrain/TargetPose", pose)
+        );
+    }
+
     @Override
     public void periodic() {
         poseEstimator.update(gyro.getRotation2d(), getLeftPositionMeters(), getRightPositionMeters());
+
+        Logger.recordOutput("Drivetrain/Outputs/LeftA", leftA.getAppliedOutput());
+        Logger.recordOutput("Drivetrain/Outputs/LeftB", leftB.getAppliedOutput());
+        Logger.recordOutput("Drivetrain/Outputs/RightA", rightA.getAppliedOutput());
+        Logger.recordOutput("Drivetrain/Outputs/RightB", rightB.getAppliedOutput());
+        Logger.recordOutput("Drivetrain/Currents/LeftA", leftA.getAppliedOutput());
+        Logger.recordOutput("Drivetrain/Currents/LeftB", leftB.getAppliedOutput());
+        Logger.recordOutput("Drivetrain/Currents/RightA", rightA.getAppliedOutput());
+        Logger.recordOutput("Drivetrain/Currents/RightB", rightB.getAppliedOutput());
     }
 
     public void runClosedLoop(ChassisSpeeds speeds, DriveFeedforwards feedforwards) {
@@ -130,8 +151,8 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void runClosedLoop(double leftMetersPerSec, double rightMetersPerSec) {
-        Logger.recordOutput("Drive/LeftVelocitySetpoint", leftMetersPerSec);
-        Logger.recordOutput("Drive/RightVelocitySetpoint", rightMetersPerSec);
+        Logger.recordOutput("Drivetrain/LeftVelocitySetpoint", leftMetersPerSec);
+        Logger.recordOutput("Drivetrain/RightVelocitySetpoint", rightMetersPerSec);
 
         leftController.setReference(
             leftMetersPerSec / DrivetrainConstants.velocityConversion, 

@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 
@@ -23,8 +24,10 @@ public class TeleopDrive extends Command {
 
     @Override
     public void execute() {
-        drivetrain.drive.arcadeDrive(forwardSupplier.get(), turnSupplier.get());
-        Logger.recordOutput("Drivetrain/JoystickX", forwardSupplier.get());
-        Logger.recordOutput("Drivetrain/JoystickZ", turnSupplier.get());
+        double driveValue = MathUtil.applyDeadband(forwardSupplier.get(), 0.1);
+        double turnValue = MathUtil.applyDeadband(turnSupplier.get(), 0.1);
+        Logger.recordOutput("Drivetrain/ControllerDrive", driveValue);
+        Logger.recordOutput("Drivetrain/ControllerTurn", turnValue);
+        drivetrain.drive.arcadeDrive(driveValue, turnValue);
     }
 }

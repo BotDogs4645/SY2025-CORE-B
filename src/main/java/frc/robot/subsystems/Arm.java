@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -21,5 +23,13 @@ public class Arm extends SubsystemBase {
 
     public void setPivotDutyCycle(double speed) {
         pivotMotor.set(speed);
+    }
+
+    @Override
+    public void periodic() {
+        Logger.recordOutput("Arm/PivotOutput", pivotMotor.getAppliedOutput());
+        Logger.recordOutput("Arm/WheelOutput", wheelMotor.getAppliedOutput());
+        Logger.recordOutput("Arm/PivotCurrent", pivotMotor.getOutputCurrent());
+        Logger.recordOutput("Arm/WheelCurrent", wheelMotor.getOutputCurrent());
     }
 }
