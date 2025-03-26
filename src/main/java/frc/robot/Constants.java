@@ -27,9 +27,9 @@ public class Constants {
         // Smart current limit (amps) per motor
         public static final int currentLimit = 60;
 
-        public static final double p = 0.1;
+        public static final double p = 100;
         public static final double i = 0;
-        public static final double d = 0;        
+        public static final double d = 5;        
 
         public static final int leftMotorAID = 2;
         public static final int leftMotorBID = 5;
@@ -38,7 +38,7 @@ public class Constants {
 
         public static final int pigeonID = 7;
 
-        public static final Distance trackWidth = Inches.of(27.5);
+        public static final Distance trackWidth = Inches.of(21.5);
         public static final Distance wheelRadius = Inches.of(3.0);
         public static final double motorReduction = 10.71;
 

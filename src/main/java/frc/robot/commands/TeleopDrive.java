@@ -13,8 +13,7 @@ public class TeleopDrive extends Command {
     private final Supplier<Double> forwardSupplier;
     private final Supplier<Double> turnSupplier;
 
-    SlewRateLimiter driveLimiter = new SlewRateLimiter(0.5);
-    SlewRateLimiter turnLimiter = new SlewRateLimiter(0.5);
+    SlewRateLimiter driveLimiter = new SlewRateLimiter(3);
 
 
     private final Drivetrain drivetrain;
