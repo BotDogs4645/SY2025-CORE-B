@@ -64,10 +64,10 @@ public class Drivetrain extends SubsystemBase {
         rightA = new SparkMax(DrivetrainConstants.rightMotorAID, MotorType.kBrushless);
         rightB = new SparkMax(DrivetrainConstants.rightMotorBID, MotorType.kBrushless);
 
-        configureMotor(leftA, true, null);
-        configureMotor(leftB, true, leftA);
-        configureMotor(rightA, false, null);
-        configureMotor(rightB, false, rightA);
+        configureMotor(leftA, false, null);
+        configureMotor(leftB, false, leftA);
+        configureMotor(rightA, true, null);
+        configureMotor(rightB, true, rightA);
 
         leftEncoder = leftA.getEncoder();
         rightEncoder = rightA.getEncoder();
@@ -77,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
         gyro = new Pigeon2(DrivetrainConstants.pigeonID);
 
         kinematics = new DifferentialDriveKinematics(DrivetrainConstants.trackWidth.in(Meters));
-        drive = new DifferentialDrive(leftA, leftB);
+        drive = new DifferentialDrive(leftA, rightA);
         poseEstimator = new DifferentialDrivePoseEstimator(kinematics, new Rotation2d(), 0, 0, new Pose2d());
     
         createAutoBuilder();
@@ -100,7 +100,7 @@ public class Drivetrain extends SubsystemBase {
         config.closedLoop.pid(DrivetrainConstants.p, DrivetrainConstants.i, DrivetrainConstants.d);
         config.closedLoop.outputRange(-1, 1);
 
-        motor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+        motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     private void createAutoBuilder() {

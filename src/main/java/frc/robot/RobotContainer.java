@@ -9,6 +9,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Spit;
 import frc.robot.commands.TeleopDrive;
@@ -39,6 +40,12 @@ public class RobotContainer {
     ));
 
     controller.leftBumper().whileTrue(new Spit(roller));
+    controller.leftTrigger().onTrue(new InstantCommand(() -> arm.setPivotDutyCycle(0.1)));
+    controller.leftTrigger().onFalse(new InstantCommand(() -> arm.setPivotDutyCycle(-0.15)));
+    controller.rightBumper().onTrue(new InstantCommand(() -> arm.setDutyCycle(-0.3)));
+    controller.rightTrigger().onTrue(new InstantCommand(() -> arm.setDutyCycle(0.3)));
+    controller.rightBumper().onFalse(new InstantCommand(() -> arm.setDutyCycle(0)));
+    controller.rightTrigger().onFalse(new InstantCommand(() -> arm.setDutyCycle(0)));
   }
 
   public Command getAutonomousCommand() {

@@ -19,24 +19,24 @@ public class Constants {
     }
 
     public static class RollerConstants {
-        public static final int rollerMotorID = 7;
-        public static final double wheelDutyCycle = 0.4;
+        public static final int rollerMotorID = 1;
+        public static final double wheelDutyCycle = 0.5;
     }
 
     public static class DrivetrainConstants {
         // Smart current limit (amps) per motor
-        public static final int currentLimit = 80;
+        public static final int currentLimit = 60;
 
-        public static final double p = 1;
+        public static final double p = 0.1;
         public static final double i = 0;
         public static final double d = 0;        
 
         public static final int leftMotorAID = 2;
-        public static final int leftMotorBID = 3;
-        public static final int rightMotorAID = 4;
-        public static final int rightMotorBID = 5;
+        public static final int leftMotorBID = 5;
+        public static final int rightMotorAID = 3;
+        public static final int rightMotorBID = 4;
 
-        public static final int pigeonID = 6;
+        public static final int pigeonID = 7;
 
         public static final Distance trackWidth = Inches.of(27.5);
         public static final Distance wheelRadius = Inches.of(3.0);
