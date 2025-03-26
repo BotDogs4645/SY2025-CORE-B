@@ -14,12 +14,14 @@ import frc.robot.commands.Spit;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Roller;
+import frc.robot.subsystems.Arm;
 
 public class RobotContainer {
   private final CommandXboxController controller = new CommandXboxController(Constants.driveControllerId);
 
   private final Drivetrain drivetrain = new Drivetrain();
   private final Roller roller = new Roller();
+  private final Arm arm = new Arm();
   
   private final LoggedDashboardChooser<Command> autoChooser;
 
